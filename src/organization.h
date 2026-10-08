@@ -31,11 +31,13 @@
 #include "entity.h"
 
 typedef struct Organization {
-  Entity SUPPER;
-  Array /*<uint32_t>*/ *members; // Array<entity id>
+  Entity SUPER;
+  Array /*<Union<REFER(Character), REFER(Organization)>>*/ *members;
+  Array /*<Facility>*/ *infras;
+  Array /*<Agency>*/ *agencies;
   // other data
 } Organization;
 
-Organization *Organization_new(char *name);
+uint32_t Organization_init(Organization *organization, const Allocator *allocator);
 
 #endif //YIKO_ORGANIZATION_H

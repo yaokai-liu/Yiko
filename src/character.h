@@ -30,11 +30,21 @@
 #include "entity.h"
 
 typedef struct Character {
-  Entity SUPPER;
-  void *model;
+  Entity SUPER;
+  Logger logger;
+  Array /*<Pair<IDENT_TYPE, value>>*/ *identity;
+
+  Array/*<Attribute>*/ *attributes;
+  Array /*<State>*/ *states;
+  Array/*<Trait>*/ *traits;
+  Array /*<Fate>*/ *fates;
+  Array /*<Buff>*/ *buffs;
+
+  // Array<Pair<REFER(Entity), relation type>>
+  Array/*<Pair<REFER(Character), uint32_t>>*/ *relationships;
   // other data
 } Character;
 
-Character *Character_new(char *name);
+uint32_t Character_init(Character *character, const Allocator *allocator);
 
 #endif //YIKO_CHARACTER_H

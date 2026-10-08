@@ -19,20 +19,25 @@
  *
  * Project Name: Yiko
  * Module Name: src
- * Filename: logger.c
+ * Filename: context.c
  * Creator: Yaokai Liu
- * Create Date: 2026-10-05
+ * Create Date: 2026-10-08
  * Copyright (c) 2026 Yaokai Liu. All rights reserved.
  **/
 
-#include "logger.h"
+#include "context.h"
+#include "allocator.h"
+#include "character.h"
+#include "organization.h"
 
-#include "enum.h"
+YikoContext *YikoContext_new(const Allocator *allocator) {
+  YikoContext *context = allocator->calloc(1, sizeof(YikoContext));
+  context->allocator = allocator;
 
-uint32_t Logger_init(Logger *logger, const Allocator *allocator) {
+  context->entity_array = Array_new(sizeof(REFER(Entity)), YIKO_ENTITY_PTR, allocator);
+  context->character_array = Array_new(sizeof(Character), YIKO_ENTITY_CHARACTER, allocator);
+  context->organization_array = Array_new(sizeof(Character), YIKO_ENTITY_ORGANIZATION, allocator);
+  context->item_array = Array_new(sizeof(Character), YIKO_ENTITY_ITEM, allocator);
 
-  logger->history = Array_new(sizeof(Record), YIKO_ENTITY_RECORD, allocator);
-  logger->identities = Array_new(sizeof(Identity), YIKO_ENTITY_IDENTITY, allocator);
-
-  return 0;
+  return context;
 }

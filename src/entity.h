@@ -29,24 +29,10 @@
 #define YIKO_ENTITY_H
 #include "logger.h"
 
-
 typedef struct Entity {
   uint16_t gc_flags; // YIKO_GC_FLAG
   uint16_t entity_flags; // YIKO_ENTITY_FLAG
-  uint32_t eid; // entity id
-  REFER(void) object; // REFER of object this struct inhabits
-  Logger logger;
-
-  Array/*<uint32_t>*/ *attributes; // Array<attribute id>
-  Array /*<uint32_t>*/ *states; // Array<state id>
-  Array/*<uint32_t>*/ *traits; // Array<trait id>
-  Array /*<Fate>*/ *fates; // Array<Fate>
-  Array /*<Buff>*/ *buffs; // Array<Buff>
-
-  // Array<Pair<entity id, relation type>>
-  Array/*<Pair<uint32_t, uint32_t>>*/ *relationships;
+  uint32_t model; // model id
 } Entity;
-
-
 
 #endif //YIKO_ENTITY_H

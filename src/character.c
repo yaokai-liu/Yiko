@@ -26,5 +26,22 @@
  **/
 
 #include "character.h"
+#include "modality.h"
+#include "enum.h"
 
+uint32_t Character_init(Character *character, const Allocator *allocator) {
+  character->SUPER.gc_flags = YIKO_GC_FLAG_IS_ACTIVE & ~YIKO_GC_FLAG_SHOULD_REMOVE;
 
+  const uint32_t result = Logger_init(&character->logger, allocator);
+  if (result != 0) { return result; }
+
+  character->attributes = Array_new(sizeof(Attribute), YIKO_ENTITY_ATTRIBUTE, allocator);
+  character->states = Array_new(sizeof(State), YIKO_ENTITY_STATE, allocator);
+  character->traits = Array_new(sizeof(Trait), YIKO_ENTITY_TRAIT, allocator);
+  character->fates = Array_new(sizeof(Fate), YIKO_ENTITY_FATE, allocator);
+  character->buffs = Array_new(sizeof(Buff), YIKO_ENTITY_BUFF, allocator);
+
+  character->relationships = Array_new(sizeof(CO_PTR), YIKO_ENTITY_PTR, allocator);
+
+  return 0;
+}

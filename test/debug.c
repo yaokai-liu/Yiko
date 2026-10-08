@@ -24,3 +24,8 @@
  * Create Date: 2026-10-08
  * Copyright (c) 2026 Yaokai Liu. All rights reserved.
  **/
+
+int main() {
+
+  return 0;
+}

@@ -34,6 +34,10 @@ typedef struct Attribute {
   uint32_t value;
 } Attribute;
 
+typedef struct State {
+  // TODO
+} State;
+
 typedef void TraitApplyFunc(uint32_t *entity_id);
 typedef void TraitRemoveFunc(uint32_t *entity_id);
 typedef void TraitUpdateFunc(uint32_t *entity_id, Trait *trait_self, void *trait_matrix);
@@ -46,12 +50,12 @@ typedef struct Trait {
 } Trait;
 
 typedef struct Fate {
-  Trait SUPPER;
+  Trait SUPER;
   TraitUpdateFunc *update_func;
 } Fate;
 
 typedef struct Buff {
-  Trait SUPPER;
+  Trait SUPER;
   TraitUpdateFunc *update_func;
   uint16_t gc_flags; // YIKO_GC_FLAGS
   uint16_t buff_flags; // YIKO_BUFF_FLAGS
@@ -59,7 +63,14 @@ typedef struct Buff {
 
 typedef struct Skill {
   uint32_t type;
-  // other data
+  // TODO
 } Skill;
+
+typedef struct Facility {
+  // TODO
+} Facility;
+typedef struct Agency {
+  // TODO
+} Agency;
 
 #endif //YIKO_YIKO_BUILTIN_H

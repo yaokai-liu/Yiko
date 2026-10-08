@@ -31,7 +31,7 @@
 #include "entity.h"
 
 typedef struct Item {
-  Entity SUPPER;
+  Entity SUPER;
   uint32_t type;
   uint32_t count;
   // other data

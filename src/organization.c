@@ -26,3 +26,17 @@
  **/
 
 #include "organization.h"
+#include "enum.h"
+#include "modality.h"
+
+
+uint32_t Organization_init(Organization *organization, const Allocator *allocator) {
+  organization->SUPER.gc_flags = YIKO_GC_FLAG_IS_ACTIVE & ~YIKO_GC_FLAG_SHOULD_REMOVE;
+
+  organization->members = Array_new(sizeof(CO_PTR), YIKO_ENTITY_PTR, allocator);
+  organization->agencies = Array_new(sizeof(Facility), YIKO_ENTITY_AGENCY, allocator);
+  organization->infras = Array_new(sizeof(Agency), YIKO_ENTITY_INFRA, allocator);
+
+  return 0;
+
+}

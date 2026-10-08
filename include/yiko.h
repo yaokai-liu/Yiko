@@ -29,18 +29,27 @@
 #define YIKO_YIKO_H
 #include <stdint.h>
 #include "array.h"
-#include "avl-tree.h"
 
+typedef struct Entity Entity;
 typedef struct Character /*extend Entity*/ Character;
 typedef struct Organization /*extend Entity*/ Organization;
 typedef struct Item /*extend Entity*/ Item;
 typedef struct Logger Logger;
 
 typedef struct Attribute Attribute;
+typedef struct State State;
 typedef struct Trait Trait;
 typedef struct Fate /*extend Trait*/ Fate;
 typedef struct Buff /*extend Trait*/ Buff;
 typedef struct Skill Skill;
+
+typedef struct Facility Facility;
+typedef struct Agency Agency;
+
+typedef union CO_PTR {
+  REFER(Character) chr;
+  REFER(Organization) org;
+} CO_PTR; // Union<REFER(Character), REFER(Organization)>>
 
 typedef void TraitApplyFunc(uint32_t *entity_id);
 typedef void TraitRemoveFunc(uint32_t *entity_id);

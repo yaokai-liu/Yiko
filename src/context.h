@@ -19,46 +19,25 @@
  *
  * Project Name: Yiko
  * Module Name: src
- * Filename: logger.h
+ * Filename: context.h
  * Creator: Yaokai Liu
- * Create Date: 2026-10-05
+ * Create Date: 2026-10-08
  * Copyright (c) 2026 Yaokai Liu. All rights reserved.
  **/
 
-#ifndef YIKO_LOGGER_H
-#define YIKO_LOGGER_H
+#ifndef YIKO_CONTEXT_H
+#define YIKO_CONTEXT_H
 #include "yiko.h"
-#include "avl-tree.h"
+#include "enum.h"
 
-typedef struct identity {
-  const char *name;
-  const char *favor;
-  Array /*<Pair<IDENT_TYPE, value>>*/ *pairs;
-  Array /*<REFER(Record)>*/ *information;
-} Identity;
+typedef struct YikoContext {
+  const Allocator *allocator;
+  Array /*<REFER(Entity)>*/ *entity_array;
+  Array /*<Item>*/ *item_array;
+  Array /*<Character>*/ *character_array;
+  Array /*<Organization>*/ *organization_array;
+} YikoContext;
 
-typedef struct Record {
-  uint64_t time; // game time
-  REFER(Identity) target;
-  uint32_t type; // record type
-  Array /*<Pair<uint32_t, uint32_t>>*/ *items; // Pair<item id, operation type>
+YikoContext *YikoContext_new(const Allocator *allocator);
 
-  // character's thinking about this record, influence favor, moods and decisions
-  void *thinking;
-} Record;
-
-typedef struct Logger {
-  Array /*<Record>*/ *history;
-  Array /*<Identity>*/ *identities;
-  // other data
-} Logger;
-
-uint32_t Logger_init(Logger *logger, const Allocator *allocator);
-
-uint32_t Record_addRecord(Logger *logger,
-  /*
-   * TODO
-   */
-  const Allocator *allocator);
-
-#endif //YIKO_LOGGER_H
+#endif //YIKO_CONTEXT_H
