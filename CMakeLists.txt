@@ -1,0 +1,52 @@
+cmake_minimum_required(VERSION 4.3)
+project(Yiko C)
+
+set(CMAKE_C_STANDARD 23)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/output)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/output)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/output)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
+
+if (${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
+    set(TARGET_PREFIX "")
+else ()
+    set(TARGET_PREFIX "Yiko_")
+endif ()
+
+#add_compile_options("-O3" "-Os")
+add_compile_options("-funsigned-char")
+add_compile_options("-Wall" "-Wextra" "-Werror")
+if (WIN32)
+    add_compile_options("-Wno-format")
+endif ()
+if (ENABLE_TEST_COV)
+    add_compile_options("-fprofile-arcs" "-ftest-coverage")
+endif ()
+if (ENABLE_GPROF)
+    add_compile_options("-pg")
+    add_link_options("-pg")
+endif ()
+
+if (NOT TARGET meman)
+    include_directories(meman)
+    aux_source_directory(meman MEMAN_SRC)
+    add_library(meman STATIC ${MEMAN_SRC})
+    link_libraries(meman)
+endif ()
+find_package(SQLite3 REQUIRED)
+
+include_directories(include)
+
+file(GLOB_RECURSE YIKO_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} src/*.c src/*.h)
+add_library(${TARGET_PREFIX}yiko STATIC ${YIKO_SRC})
+target_link_libraries(${TARGET_PREFIX}yiko PRIVATE m)
+#target_include_directories(${TARGET_PREFIX}yiko PRIVATE )
+
+add_executable(${TARGET_PREFIX}debug test/debug.c)
+target_link_libraries(${TARGET_PREFIX}debug PRIVATE ${TARGET_PREFIX}yiko)
+#target_include_directories(${TARGET_PREFIX}debug PRIVATE )
+
+if (BUILD_YIKO_TEST)
+    add_compile_definitions("YIKO_BUILD_TEST=1")
+
+endif ()
